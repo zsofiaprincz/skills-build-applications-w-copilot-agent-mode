@@ -6,9 +6,13 @@ OctoFit Tracker is a three-tier application for a school fitness program. The st
 
 ## Tier boundaries
 
-- **Presentation tier**: Build four React routes and use the shared API client for loading, empty, success, and error states.
-- **Logic tier**: Express and TypeScript routes/services in `octofit-tracker/backend/src` expose `/api/*` behavior on port `8000`.
-- **Data tier**: Mongoose models and seed data in `octofit-tracker/backend/src/models` and `src/scripts/seed.ts` persist to MongoDB on port `27017`.
+- Presentation tier decision: Build four React routes and use the shared API client for loading, empty, success, and error states.
+- Logic tier decision: Keep Express routes thin and place validation and business behavior in explicit service functions.
+- Data tier decision: Use Mongoose schemas for validation and `seed.ts` for stable, idempotent demo records.
+- Activity tracking approach: Validate ObjectIds and referenced user/team records, then create an activity with the submitted values, computed points, and an occurrence timestamp.
+- Team management approach: Reject teams without names and store the submitted name, mascot, and member ObjectIds.
+- Leaderboard approach: Aggregate activity points by team, sort highest to lowest, and assign 1-based ranks.
+- Workout suggestions approach: Find the seeded user by email, match workout focus with their goal or recent activity type, and return a rationale.
 
 ## Ports and environment rules
 
